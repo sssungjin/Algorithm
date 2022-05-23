@@ -6,6 +6,7 @@ char res[10001];
 char a[10001];
 char b[10001];
 
+
 void initChar(char *str)
 {
     char temp[10001];
@@ -26,6 +27,8 @@ void add(char *a, char *b)
     {
         int temp_a = a[i] - '0';
         int temp_b = b[i] - '0';
+        if (temp_a < 0) temp_a = 0;
+        if (temp_b < 0) temp_b = 0;
         int sum = temp_a + temp_b;
 
         if (sum > 9)
