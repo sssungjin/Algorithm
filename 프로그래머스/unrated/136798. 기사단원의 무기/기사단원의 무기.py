@@ -10,7 +10,9 @@ def solution(number, limit, power):
                 if((j**2) != i):
                     attack += 1
         if attack > limit:
-            lst.append(power)
+            #lst.append(power)
+            answer += power
         else:
-            lst.append(attack)
-    return sum(lst)
+            #lst.append(attack)
+            answer += attack
+    return answer
