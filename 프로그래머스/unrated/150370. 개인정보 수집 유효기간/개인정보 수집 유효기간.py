@@ -6,7 +6,6 @@ def solution(today, terms, privacies):
         a,b = privacies[i].split()
         year,month,date = a.split('.')
         for j in range(len(terms)):
-            #x = A, y = 6
             x,y = terms[j].split()
             if b == x:
                 tmp1,tmp2,tmp3 = int(year), int(month), int(date)
@@ -26,7 +25,5 @@ def solution(today, terms, privacies):
                         answer.append(i+1)
                     elif tmp2 == int(t_month):
                         if tmp3 < int(t_date):
-                            answer.append(i+1)
-                    
-                
+                            answer.append(i+1)    
     return answer
