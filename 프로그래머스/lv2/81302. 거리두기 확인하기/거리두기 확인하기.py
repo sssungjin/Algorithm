@@ -9,12 +9,16 @@ def check_distance(place):
             if distance == 0 or distance > 2:
                 continue
             
+            #붙어있는 경우
             if distance == 1:
                 return 0
+            #같은 행에서 파티션 체크
             elif x1 == x2 and place[x1][int((y1+y2)/2)] != 'X':
                 return 0
+            #같은 열에서 파티션 체크
             elif y1 == y2 and place[int((x1+x2)/2)][y1] != 'X':
                 return 0
+            #같은행 같은열 아닐때 파티션 체크(대각선)
             elif y1 != y2 and x1 != x2:
                 if place[x2][y1] != 'X' or place[x1][y2] != 'X':
                     return 0
