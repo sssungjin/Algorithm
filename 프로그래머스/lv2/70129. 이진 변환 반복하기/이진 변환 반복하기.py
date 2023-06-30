@@ -1,11 +1,9 @@
 def solution(s):
     zero = 0
-    i = 1
-    while True:
+    i = 0
+    while s != '1':
         zero += s.count('0')
         s = s.replace('0', '')
-        if s == '1':
-            break
         s = format(len(s), 'b')
         i += 1
 
