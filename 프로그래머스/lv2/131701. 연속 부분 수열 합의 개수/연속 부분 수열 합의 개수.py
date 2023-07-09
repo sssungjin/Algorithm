@@ -1,16 +1,10 @@
 def solution(elements):
-    answer = 0
-    length = len(elements)
-    print(length)
-    elements = elements + elements
-    print(elements)
     tmp = []
+    length = len(elements)
+    elements = elements + elements
     for i in range(1,length+1):
-        #i는 길이 1,2,3,4,5
+        #i는 합을 구할 길이 1,2,3,4,5
         for j in range(length):
-            #j는 시작위치 0,1,2,3,4 j ~ j+i
+            #j는 시작위치 j ~ j+i 만큼의 합
             tmp.append(sum(elements[j:j+i]))
-    answer = list(set(tmp))
-    return len(answer)
-
-#7911479114
+    return len(list(set(tmp)))
