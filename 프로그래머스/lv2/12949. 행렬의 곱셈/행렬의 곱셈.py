@@ -1,3 +1,7 @@
-import numpy as np
 def solution(arr1, arr2):
-    return np.dot(np.array(arr1), np.array(arr2)).tolist()
+    answer = [[0]*len(arr2[0]) for _ in range(len(arr1))]
+    for i in range(len(arr1)):
+        for j in range(len(arr2[0])):
+            for k in range(len(arr1[0])):
+                answer[i][j] += arr1[i][k] * arr2[k][j]
+    return answer
