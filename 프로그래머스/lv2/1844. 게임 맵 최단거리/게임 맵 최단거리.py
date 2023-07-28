@@ -1,9 +1,8 @@
 dx = [-1, 0, 1, 0]
-dy = [0, 1, 0, -1]
+dy = [0, 1, 0, -1]        
 
-def bfs(x, y, maps):
-    queue = []
-    queue.append((x,y))
+def solution(maps):
+    queue = [(0,0)]
     
     while queue:
         x, y = queue.pop(0)
@@ -19,9 +18,5 @@ def bfs(x, y, maps):
             if maps[nx][ny] == 1:
                 maps[nx][ny] = maps[x][y] + 1
                 queue.append((nx,ny))
-    return maps[len(maps)-1][len(maps[0])-1]
-        
-
-def solution(maps):
-    answer = bfs(0,0, maps)
+    answer = maps[len(maps)-1][len(maps[0])-1]
     return -1 if answer == 1 else answer
