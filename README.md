@@ -7,5 +7,3 @@
 
 * [백준](https://www.acmicpc.net/)<br>
 * [프로그래머스](https://school.programmers.co.kr/)
-
-z
