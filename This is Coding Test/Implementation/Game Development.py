@@ -2,7 +2,7 @@ def solution(sx, sy, direction, gameMap, visited):
     x, y = sx, sy
     steps = [(-1, 0), (0, -1), (1, 0), (0, 1)]
     ans = 0
-    turn_time = 0
+    turn_cnt = 0
 
     while True:
         # 반시계 방향 90도 회전
@@ -17,13 +17,13 @@ def solution(sx, sy, direction, gameMap, visited):
             visited[nx][ny] = 1
             x, y = nx, ny
             ans += 1
-            turn_time = 0
+            turn_cnt = 0
             continue
         else:
-            turn_time += 1
+            turn_cnt += 1
 
         # 4방향 다 못간다면 일단 nx, ny를 뒤로 이동
-        if turn_time == 4:
+        if turn_cnt == 4:
             nx = x - step[0]
             ny = y - step[1]
             # 육지여서 뒤로 갈 수 있으면 이동 확정
@@ -32,7 +32,7 @@ def solution(sx, sy, direction, gameMap, visited):
                 y = ny
             else:
                 break
-            turn_time = 0
+            turn_cnt = 0
     print(ans)
 
 

@@ -1,9 +1,9 @@
-def solution(N, K):
+def solution(N, M):
     print()
 
 def main():
-    N, K = map(int, input().split())
-    solution(N, K)
+    N, M = map(int, input().split())
+    solution(N, M)
 
 if __name__ == "__main__":
     main()
