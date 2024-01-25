@@ -1,17 +1,17 @@
 def solution(N, M, arr_a, arr_b):
-    ans = sum(arr_a)
+    arr_a.sort() # 오름차순
+    arr_b.sort(reverse = True) # 내림차순
     for i in range(M):
-        ans -= min(arr_a)
-        ans += max(arr_b)
+        if arr_b[i] > arr_a[i]:
+            arr_a[i], arr_b[i] = arr_b[i], arr_a[i]
 
-    print(ans)
+    print(sum(arr_a))
 
 def main():
     N, M = map(int, input().split())
     arr_a = list(map(int, input().split()))
-    arr_b = list(map(int, input().split())
-    print(arr_a)
-    print(arr_b)
+    arr_b = list(map(int, input().split()))
+
     solution(N, M, arr_a, arr_b)
 
 if __name__ == "__main__":
