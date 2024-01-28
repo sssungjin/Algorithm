@@ -5,4 +5,3 @@ join used_goods_reply as r
 on r.board_id = b.board_id
 where YEAR(b.CREATED_DATE) = 2022 and MONTH(b.CREATED_DATE) = 10
 order by r.created_date, b.title;
-
