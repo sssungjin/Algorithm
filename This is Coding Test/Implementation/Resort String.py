@@ -10,9 +10,6 @@ def solution(N):
     ans += str(sum(digit))
     print(ans)
 
-
-    print()
-
 def main():
     N = input()
     solution(N)
