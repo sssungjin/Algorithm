@@ -1,40 +1,35 @@
-from itertools import permutations
+n = int(input()) 
+array = list(map(int,input().split())) 
+add, sub, mul, div = map(int,input().split()) 
 
-n = int(input())
-num = list(map(int, input().split()))
-oper = list(map(int, input().split()))
-length = sum(oper)
-oplist = []
-op = ['+', '-', '*', '/']
+max_value = -1e9 - 1
+min_value = 1e9 + 1
 
-for i in range(4):
-    for j in range(oper[i]):
-        oplist.append(op[i])
+def dfs(i, now):
+    global add, sub, mul, div, max_value, min_value
 
-permu = list(permutations(oplist, length))
+    if i == n: 
+        min_value = min(min_value, now)
+        max_value = max(max_value, now)
+    else:
+        if add > 0: # 더하기 연산자가 1개 이상이면
+            add -= 1 # 연산할 것이므로 한개 빼주고
+            dfs(i + 1, now + array[i]) # 다음 연산할 index와 계산 결과 넘겨줌
+            add += 1 # 모두 완료하면 다시 연산자의 개수 돌려줌
+        if sub > 0:
+            sub -= 1
+            dfs(i + 1, now - array[i])
+            sub += 1
+        if mul > 0:
+            mul -= 1
+            dfs(i + 1, now * array[i])
+            mul += 1
+        if div > 0:
+            div -= 1
+            dfs(i + 1, int(now / array[i])) 
+            div += 1
 
-ans = []
-for ops in permu:
-    tmp = 0
-    for j in range(length):
-        if j == 0:
-            if ops[j] == '+':
-                tmp = num[0] + num[1]
-            elif ops[j] == '-':
-                tmp = num[0] - num[1]
-            elif ops[j] == '*':
-                tmp = num[0] * num[1]
-            elif ops[j] == '/':
-                tmp = int(num[0]/num[1])
-        else:
-            if ops[j] == '+':
-                tmp += num[j+1]
-            elif ops[j] == '-':
-                tmp -= num[j+1]
-            elif ops[j] == '*':
-                tmp *= num[j+1]
-            elif ops[j] == '/':
-                tmp = int(tmp/num[j+1])
-    ans.append(tmp)
-print(max(ans))
-print(min(ans))
+dfs(1, array[0])
+
+print(max_value)
+print(min_value)
