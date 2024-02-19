@@ -1,0 +1,12 @@
+-- 코드를 입력하세요
+SELECT I.ANIMAL_ID, I.ANIMAL_TYPE, I.NAME
+#SELECT *
+FROM ANIMAL_INS I
+LEFT JOIN ANIMAL_OUTS O
+USING(ANIMAL_ID)
+WHERE I.SEX_UPON_INTAKE LIKE 'Intact%'
+    AND SEX_UPON_OUTCOME IN ('Neutered Male', 'Spayed Female')
+ORDER BY I.ANIMAL_ID
+# netuered, spayed -> 중성화
+# intact -> 온전
+# SEX_UPON_INTAKE가 INTACT로 시작하면서 SEX_UPON_OUTCOME이 NEUTERED 또는 SPAYED로 시작하는 동물
