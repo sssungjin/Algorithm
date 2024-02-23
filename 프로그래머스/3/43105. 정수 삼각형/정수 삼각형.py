@@ -13,5 +13,5 @@ def solution(triangle):
                 dp[i][j] = dp[i-1][j - 1] + triangle[i][j]
             else:
                 dp[i][j] = max(dp[i-1][j-1], dp[i-1][j]) + triangle[i][j]
-    answer = max(dp[len(triangle) - 1])
+    answer = max(dp[-1])
     return answer
