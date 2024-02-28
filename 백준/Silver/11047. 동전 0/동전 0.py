@@ -6,10 +6,12 @@ for i in range(n):
 coins.sort(reverse=True)
 answer = 0
 
-while k != 0:
-    for coin in coins:
-        # k보다 작거나 같으면
-        if coin <= k:
-            answer += k // coin
-            k %= coin            
+#while k != 0:
+for coin in coins:
+    # k보다 작거나 같으면
+    if coin <= k:
+        answer += k // coin
+        k %= coin
+        if k == 0:
+            break 
 print(answer)
