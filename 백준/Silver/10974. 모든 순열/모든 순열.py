@@ -1,12 +1,13 @@
-from itertools import permutations
-
 n = int(input())
+tmp = []
 
-permu = list(permutations(range(1,n+1), n))
-
-for i in permu:
-    for j in range(len(i)):
-        if j != len(i) - 1:
-            print(i[j], end=" ")
-        else:
-            print(i[j], end="\n")
+def dfs():
+    if len(tmp) == n:
+        print(*tmp)
+        return
+    for i in range(1, n+1):
+        if i not in tmp:
+            tmp.append(i)
+            dfs()
+            tmp.pop()
+dfs()
