@@ -2,39 +2,39 @@ from collections import deque
 
 t = int(input())
 
-dx = [1, 0, -1, 0]
-dy = [0, 1, 0, -1]
+dr = [-1, 1, 0, 0]
+dc = [0 ,0, -1, 1]
 ans = []
 
-def solution(n, m, graph):
+def bfs(graph, n, m):
     visited = [[False for _ in range(m)] for _ in range(n)]
     q = deque()
     num = 0
-    # i는 행 j는 열
+    
     for i in range(n):
         for j in range(m):
-            # 방문하지 않았고 1이면(배추심어져있으면)
             if not visited[i][j] and graph[i][j] == 1:
-                # 큐에 추가
                 q.append((i, j))
+                # 붙어 있는 배추
                 while q:
-                    y, x = q.pop() # i행(y) j열(x)
+                    r, c = q.popleft()
                     for k in range(4):
-                        nx = x + dx[k]
-                        ny = y + dy[k]
-                        if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx] and graph[ny][nx] == 1:
-                            visited[ny][nx] = True
-                            q.append((ny, nx))
+                        nr = r + dr[k]
+                        nc = c + dc[k]
+                        if 0 <= nr < n and 0 <= nc < m and not visited[nr][nc] and graph[nr][nc] == 1:
+                            visited[nr][nc] = True
+                            q.append((nr, nc))
                 num += 1
     ans.append(num)
-
+    
 for i in range(t):
     m, n, k = map(int, input().split())
     graph = [[0 for _ in range(m)] for _ in range(n)]
     for j in range(k):
-        x, y = map(int, input().split())
+        x, y = map(int, input().split())        
         graph[y][x] = 1
-    solution(n, m, graph)
+    bfs(graph, n, m)
+    
 
 for i in ans:
     print(i)
