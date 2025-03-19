@@ -1,69 +1,75 @@
 from collections import deque
 
-# 상하좌우 이동 방향
-dx = [-1, 0, 0, 1]
-dy = [0, -1, 1, 0]
+n = int(input())
+arr = [list(map(int, input().split())) for _ in range(n)]
 
-def bfs(board, shark_x, shark_y, shark_size, N):
-    visited = [[-1] * N for _ in range(N)]
-    queue = deque([(shark_x, shark_y)])
-    visited[shark_x][shark_y] = 0
+# 이동 방향: 위, 왼쪽, 오른쪽, 아래 순으로 (문제 우선순위 반영)
+dr = [-1, 0, 0, 1]
+dc = [0, -1, 1, 0]
+
+# 상어 초기 설정
+shark_size = 2
+shark_eaten = 0
+
+# 상어 초기 위치 찾기
+def find_shark():
+    for i in range(n):
+        for j in range(n):
+            if arr[i][j] == 9:
+                arr[i][j] = 0  # 상어 위치 초기화
+                return i, j
+    return None, None
+
+def bfs(shark_r, shark_c, shark_size):
+    queue = deque([(shark_r, shark_c, 0)])  # (행, 열, 거리)
+    visited = [[False] * n for _ in range(n)]
+    visited[shark_r][shark_c] = True
     
-    # 먹을 수 있는 물고기 리스트
-    fish = []
+    min_dist = float('inf')
+    edible_fish = None
     
     while queue:
-        x, y = queue.popleft()
+        r, c, dist = queue.popleft()
+        
+        # 현재 거리가 이미 최소 거리를 넘으면 더 탐색할 필요 없음
+        if dist > min_dist:
+            break
+        
+        # 먹을 수 있는 물고기 발견
+        if 0 < arr[r][c] < shark_size:
+            min_dist = dist
+            if edible_fish is None or (r, c) < edible_fish[1:]:  # 위쪽, 왼쪽 우선
+                edible_fish = (dist, r, c)
+            continue
+        
+        # 다음 위치 탐색
         for i in range(4):
-            nx, ny = x + dx[i], y + dy[i]
-            if 0 <= nx < N and 0 <= ny < N and visited[nx][ny] == -1:
-                # 상어 크기보다 작거나 같은 경우에만 이동 가능
-                if board[nx][ny] <= shark_size:
-                    visited[nx][ny] = visited[x][y] + 1
-                    queue.append((nx, ny))
-                    # 먹을 수 있는 물고기라면 추가
-                    if 0 < board[nx][ny] < shark_size:
-                        fish.append((visited[nx][ny], nx, ny))
+            nr, nc = r + dr[i], c + dc[i]
+            if 0 <= nr < n and 0 <= nc < n and not visited[nr][nc] and arr[nr][nc] <= shark_size:
+                visited[nr][nc] = True
+                queue.append((nr, nc, dist + 1))
     
-    return fish
+    return edible_fish
 
-def solve(N, board):
-    # 아기 상어 초기 위치 찾기
-    shark_x, shark_y = 0, 0
-    for i in range(N):
-        for j in range(N):
-            if board[i][j] == 9:
-                shark_x, shark_y = i, j
-                board[i][j] = 0  # 상어 위치를 빈 칸으로
-    
-    shark_size = 2
-    eaten = 0
-    total_time = 0
-    
-    while True:
-        # 먹을 수 있는 물고기 찾기
-        fish = bfs(board, shark_x, shark_y, shark_size, N)
-        if not fish:  # 더 이상 먹을 물고기가 없으면 종료
-            return total_time
-        
-        # 거리, 행, 열 순으로 정렬해 우선순위 높은 물고기 선택
-        fish.sort()  # (거리, x, y) 순으로 정렬됨
-        dist, next_x, next_y = fish[0]
-        
-        # 상어 이동 및 물고기 먹기
-        board[next_x][next_y] = 0
-        shark_x, shark_y = next_x, next_y
-        total_time += dist
-        eaten += 1
-        
-        # 크기 증가 체크
-        if eaten == shark_size:
-            shark_size += 1
-            eaten = 0
-    
-# 입력 처리
-N = int(input())
-board = [list(map(int, input().split())) for _ in range(N)]
+# 메인 로직
+total_time = 0
+shark_r, shark_c = find_shark()
 
-# 결과 출력
-print(solve(N, board))
+while True:
+    result = bfs(shark_r, shark_c, shark_size)
+    if not result:
+        break
+    
+    move_time, fish_r, fish_c = result
+    total_time += move_time
+    
+    # 상어 이동 및 물고기 먹기
+    arr[fish_r][fish_c] = 0
+    shark_r, shark_c = fish_r, fish_c
+    
+    shark_eaten += 1
+    if shark_eaten == shark_size:
+        shark_size += 1
+        shark_eaten = 0
+
+print(total_time)
