@@ -1,20 +1,20 @@
 n, m = map(int, input().split())
 arr = list(map(int, input().split()))
 
-left = 0
-right = 1
+start = 0
+end = 0
+sum_arr = 0
 ans = 0
 
-while right <= n and left <= right:
-    sum_arr = arr[left:right]
-    total = sum(sum_arr)
+while end < n:
+    sum_arr += arr[end]
     
-    if total == m:
-        ans += 1
-        right += 1
-    elif total < m:
-        right += 1
-    else:
-        left += 1
-        
+    while sum_arr >= m and start <= end:
+        if sum_arr == m:
+            ans += 1
+        sum_arr -= arr[start]
+        start += 1
+    
+    end += 1
+
 print(ans)
