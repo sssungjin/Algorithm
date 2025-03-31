@@ -11,23 +11,6 @@ def quad(r, c, length):
     color = graph[r][c]
     same = True
     
-    # if length == 2:
-    #     values = [
-    #         graph[r][c],
-    #         graph[r][c + length],
-    #         graph[r + length][c],
-    #         graph[r][c + length]
-    #     ]
-    #     flag = True
-    #     for i in range(4):
-    #         if values[i] != color:
-    #             flag = False
-    #             break
-    #     if flag == True:
-    #         print(color)
-    #     else:
-    #         print("(" , values, ")", sep='')
-    
     for i in range(r, r + length):
         for j in range(c, c + length):
             if graph[i][j] != color:
