@@ -1,22 +1,16 @@
-n = int(input())
-data = []
-time, pay = [], []
+import sys
 
-for i in range(n):
-    t, p = map(int, input().split())
-    data.append((t, p))
-    time.append(t)
-    pay.append(p)
+input = sys.stdin.readline
 
-dp = [0 for _ in range(n + 1)]
+N = int(input())
 
-for i in range(n-1, -1, -1):
-    # 상담기간이 퇴사일을 넘어가는 경우
-    if time[i] + i > n:
-        # 다음날의 금액과 같음
-        dp[i] = dp[i + 1]
-    # 오늘 상담을 안한 경우( = 다음날의 금액과 같음)와 상담을 한 경우를 비교
-    else:
-        dp[i] = max(dp[i+1], dp[time[i] + i] + pay[i])
+arr = [list(map(int, input().split())) for _ in range(N)]
 
-print(dp[0])
+dp = [0 for _ in range(N + 1)]
+
+for i in range(N):
+    for j in range(i + arr[i][0], N + 1):
+        if dp[j] < dp[i] + arr[i][1]:
+            dp[j] = dp[i] + arr[i][1]
+
+print(max(dp))
