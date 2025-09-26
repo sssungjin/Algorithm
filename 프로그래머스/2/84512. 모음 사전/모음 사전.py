@@ -1,11 +1,17 @@
-from itertools import product
-
 def solution(word):
-    arr = []
-    words = ['A', 'E', 'I', 'O', 'U']
-    for i in range(1, 6):
-        for c in product(words, repeat = i):
-            arr.append(''.join(list(c)))
+    words = []
+    vowels = ['A', 'E', 'I', 'O', 'U']
+    
+    def dfs(current_word):
+        words.append(current_word)
         
-    arr.sort()
-    return arr.index(word) + 1
+        if len(current_word) == 5:
+            return
+            
+        for vowel in vowels:
+            dfs(current_word + vowel)
+
+    for vowel in vowels:
+        dfs(vowel)
+        
+    return words.index(word) + 1
