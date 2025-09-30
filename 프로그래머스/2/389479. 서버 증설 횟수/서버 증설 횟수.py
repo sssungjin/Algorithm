@@ -1,21 +1,35 @@
+from collections import deque
+
 def solution(players, m, k):
-    server_info = [] #[0]는 증설된 시간, [1]은 증설된 횟수
-    total_cnt = 0 # 정답 (전체 증설 수)
-    now_server = 0 # 현재 증설된 서버 수
+    answer = 0
     
-    for time in range(24):
-        # 
-        ended_cnt = sum(cnt for (end_time, cnt) in server_info if end_time == time)
-        now_server -= ended_cnt
-        server_info = [(end_time, cnt) for (end_time, cnt) in server_info if end_time != time]
-                
-        # 필요한 서버 수
-        n = players[time] // m
-        # 증설 횟수
-        if now_server < n:
-            x = n - now_server
-            server_info.append((time + k, x))
-            total_cnt += x
-            now_server += x
-                
-    return total_cnt
+    n = 0
+    time = 0
+    # 증설된 시간 + k (종료시간), 증설 갯수 넣기
+    server = deque()
+    
+    for player in players:
+        # server 증설 끝나는 시간 체크
+        if server and server[0][0] == time:
+            a, b = server.popleft()
+            n -= b
+        
+        capacity = n * m + m - 1
+        # 만약 용량 초과하면
+        if player > capacity:
+            add = (player - capacity) // m
+            capacity = (n+add) * m + m - 1
+            
+            if player != capacity:
+                add += 1
+            
+            n += add
+            server.append((time + k, add))
+            answer += add
+            
+        time += 1
+        print(server)
+        print(n)
+        print(capacity)
+        print(player)
+    return answer
