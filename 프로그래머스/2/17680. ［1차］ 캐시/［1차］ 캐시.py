@@ -18,16 +18,15 @@ def solution(cacheSize, cities):
     for c in cities:
         city = c.upper()
         if city in queue:
-            idx = queue.index(city)
-            del queue[idx]
+            queue.remove(city)
             queue.append(city)
             answer += 1
         else:
             # 공간 여유가 있다면 
             if len(queue) < cacheSize:
                 queue.append(city)
-            elif len(queue) >= cacheSize:
-                del queue[0]
+            else:
+                queue.remove(queue[0])
                 queue.append(city)
             answer += 5
             
