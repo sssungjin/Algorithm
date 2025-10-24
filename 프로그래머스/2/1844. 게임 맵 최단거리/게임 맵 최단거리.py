@@ -19,8 +19,7 @@ def solution(maps):
         r, c, dist = queue.popleft()
         
         if r == (n - 1) and c == (m - 1):
-            answer = dist
-            flag = True
+            return dist
         
         for i in range(4):
             nr, nc = r + dr[i], c + dc[i]
@@ -29,6 +28,4 @@ def solution(maps):
                 queue.append((nr, nc, dist + 1))
                 visited[nr][nc] = True
                 
-    if flag:
-        return answer
-    else: return -1
+    return -1
